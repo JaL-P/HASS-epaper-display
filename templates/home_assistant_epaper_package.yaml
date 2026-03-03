@@ -1,0 +1,62 @@
+# Drop this into Home Assistant as:
+# /config/packages/epaper_dashboard.yaml
+# Then enable packages in configuration.yaml if needed.
+
+template:
+  - sensor:
+      - name: epaper_card_lights
+        icon: mdi:lightbulb
+        state: >-
+          {% if is_state('light.living_room_fairy_lights', 'on') %}
+            ON
+          {% else %}
+            OFF
+          {% endif %}
+
+      - name: epaper_card_ebike_plug
+        icon: mdi:bike-electric
+        state: >-
+          {% if is_state('switch.ebike_charger_plug', 'on') %}
+            ON
+          {% else %}
+            OFF
+          {% endif %}
+
+      - name: epaper_card_ebike_status
+        icon: mdi:lightning-bolt
+        state: >-
+          {% if is_state('binary_sensor.ebike_charging_status', 'on') %}
+            CHARGING
+          {% else %}
+            IDLE
+          {% endif %}
+
+      - name: epaper_card_ebike_power
+        icon: mdi:flash
+        unit_of_measurement: "W"
+        state: >-
+          {{ states('sensor.soundbar_plug_energy_power') | float(0) | round(0) }}
+
+      - name: epaper_card_elec_rate
+        icon: mdi:cash-fast
+        unit_of_measurement: "p/kWh"
+        state: >-
+          {{ (states('sensor.e_bike_current_electricity_rate') | float(0) * 100) | round(2) }}
+
+      - name: epaper_card_ebike_cost
+        icon: mdi:currency-gbp
+        unit_of_measurement: "£"
+        state: >-
+          {{ states('sensor.e_bike_session_cost_tracker') | float(0) | round(2) }}
+
+      - name: epaper_card_wall_fairy_power
+        icon: mdi:transmission-tower
+        unit_of_measurement: "W"
+        state: >-
+          {{ states('sensor.usb_plug_power') | float(0) | round(1) }}
+
+      - name: epaper_card_wall_fairy_voltage
+        icon: mdi:sine-wave
+        unit_of_measurement: "V"
+        state: >-
+          {{ states('sensor.usb_plug_voltage') | float(0) | round(1) }}
