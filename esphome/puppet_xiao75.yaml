@@ -71,10 +71,7 @@ display:
     reset_pin: GPIO2
     update_interval: never
     lambda: |-
-      it.fill(COLOR_WHITE);
-      if (id(puppet_image).has_image()) {
-        it.image(0, 0, id(puppet_image));
-      }
+      it.image(0, 0, id(puppet_image));
 
 deep_sleep:
   id: battery_saver
