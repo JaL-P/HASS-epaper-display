@@ -70,7 +70,6 @@ display:
       inverted: true
     reset_pin: GPIO2
     update_interval: never
-    full_update_every: 1
     lambda: |-
       it.fill(COLOR_WHITE);
       if (id(puppet_image).has_image()) {
