@@ -92,6 +92,7 @@ I’d like to eventually improve the layout logic or even explore a different ap
 ## Repo Contents
 
 - `dashboard.yaml` – ESPHome configuration  
+- `esphome/puppet_xiao75.yaml` – ESPHome config for rendering a Home Assistant Puppet Lovelace view on the XIAO 7.5" panel  
 - `fonts/` – Font files including Material Design icons  
 - `image/` – Boot splash image (optional), logos, etc 
 
