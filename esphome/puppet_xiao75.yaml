@@ -65,7 +65,8 @@ online_image:
 display:
   - platform: waveshare_epaper
     id: main_display
-    model: 7.50inv2
+    model: 7.50inv2p
+    full_update_every: 1
     cs_pin: GPIO3
     dc_pin: GPIO5
     busy_pin:
