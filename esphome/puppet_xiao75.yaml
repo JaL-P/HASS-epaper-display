@@ -29,7 +29,7 @@ wifi:
     then:
       # Avoid fetching before network stack is fully ready after association.
       - delay: 2s
-      - component.update: puppet_image
+      - component.update: dashboard_image
 
 captive_portal:
 
@@ -43,15 +43,14 @@ spi:
   clk_pin: GPIO8
   mosi_pin: GPIO10
 
-# Memory tuning for ESP32-C3:
-# - keep buffer_size small so online_image does not request a large contiguous block
-# - avoid extra components (web_server, many fonts, etc.)
+# Online image source (Puppet render).
+# `buffer_size` is set per your requested working profile.
 online_image:
-  - id: puppet_image
+  - id: dashboard_image
     format: BMP
     type: BINARY
-    buffer_size: 4096
-    url: "http://192.168.8.240:10000/lovelace/test?viewport=800x480&colors=000000,ffffff&dithering=floyd-steinberg&format=bmp&theme=Graphite+E-ink+Light&zoom=1&wait=400&lang=en&next=30&bmp_mode=binary"
+    buffer_size: 48000
+    url: !secret puppet_url
     update_interval: 10min
     on_download_finished:
       - component.update: main_display
@@ -75,7 +74,7 @@ display:
     reset_pin: GPIO2
     update_interval: never
     lambda: |-
-      it.image(0, 0, id(puppet_image));
+      it.image(0, 0, id(dashboard_image));
 
 deep_sleep:
   id: battery_saver
@@ -98,4 +97,4 @@ interval:
               - wifi.connected:
               - lambda: "return !id(last_download_ok);"
           then:
-            - component.update: puppet_image
+            - component.update: dashboard_image
