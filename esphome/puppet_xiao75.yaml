@@ -51,7 +51,7 @@ online_image:
     format: BMP
     type: BINARY
     buffer_size: 4096
-    url: "http://192.168.8.240:10000/lovelace/test?viewport=800x480&dithering=floyd-steinberg&format=bmp&theme=Graphite+E-ink+Light&zoom=1&wait=400&lang=en&next=30&bmp_mode=binary"
+    url: "http://192.168.8.240:10000/lovelace/test?viewport=800x480&colors=000000,ffffff&dithering=floyd-steinberg&format=bmp&theme=Graphite+E-ink+Light&zoom=1&wait=400&lang=en&next=30&bmp_mode=binary"
     update_interval: 10min
     on_download_finished:
       - component.update: main_display
