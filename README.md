@@ -89,9 +89,23 @@ I’d like to eventually improve the layout logic or even explore a different ap
 
 ---
 
+## Best Practices (ESPHome + ePaper + Puppet)
+
+- **Use the correct panel model first**: if polarity looks inverted (black background / white text), verify the exact `waveshare_epaper` model for your hardware before changing URL colors.
+- **Gate downloads on Wi-Fi connectivity**: trigger initial `online_image` updates from `wifi.on_connect` (with a short delay) so startup races do not cause HTTP failures.
+- **Keep RAM headroom on ESP32-C3**: avoid unnecessary components (extra fonts/web UI), keep logger level conservative, and tune `online_image.buffer_size` based on real heap behavior.
+- **Use binary BMP for e-paper**: keep `format=bmp` and `bmp_mode=binary` for predictable black/white rendering and smaller decode complexity.
+- **Retry only while awake**: for battery-powered setups, use short retry intervals during the awake window and deep sleep after success or timeout.
+- **Update display after successful download**: drive refresh from `online_image.on_download_finished` so the panel does not redraw stale/blank frames.
+- **Prefer full refresh for ghosting control**: for supported models, set `full_update_every` to reduce artifacts over time.
+- **Validate every YAML revision**: run `esphome config` (or at least YAML parsing) before flashing, because unsupported options vary by model.
+
+---
+
 ## Repo Contents
 
 - `dashboard.yaml` – ESPHome configuration  
+- `esphome/puppet_xiao75.yaml` – ESPHome config for rendering a Home Assistant Puppet Lovelace view on the XIAO 7.5" panel  
 - `fonts/` – Font files including Material Design icons  
 - `image/` – Boot splash image (optional), logos, etc 
 
