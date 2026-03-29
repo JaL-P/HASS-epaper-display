@@ -120,3 +120,28 @@ I’d like to eventually improve the layout logic or even explore a different ap
 Feel free to use, modify, and build on this—no restrictions.
 
 ---
+
+
+## XIAO 7.5" ePaper Panel specs
+
+| Item | Description |
+|---|---|
+| MCU | XIAO ESP32-C3 |
+| Display | 7.5" Monochrome ePaper Display |
+| Resolution | 800 x 480 |
+| Battery | 2000mAh |
+| Dimension | 178 x 131 x 19 mm |
+| Weight | 218g |
+| Operating Temperature | -25°C to 50°C |
+| Power Supply | USB Type-C 5V |
+| Enclosure | 3D Printing (PLA) |
+
+## New starter templates (photo-style card layout)
+
+This repo now includes ready-made template files for the Seeed Studio XIAO 7.5" ePaper panel with a 4x2 card layout similar to the reference photo:
+
+- `templates/esphome_xiao_75_epaper_base.yaml` (minimal ESPHome base config with panel defaults)
+- `templates/esphome_xiao_75_dashboard_template.yaml` (photo-style card dashboard ESPHome config)
+- `templates/home_assistant_epaper_package.yaml` (Home Assistant template sensors package)
+
+These templates are pre-mapped to the real entities shared for E-Bike charger, electricity rate/session cost, and wall fairy light metrics.

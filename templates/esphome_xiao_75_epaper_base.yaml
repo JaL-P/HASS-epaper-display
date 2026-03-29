@@ -1,0 +1,77 @@
+# XIAO 7.5" ePaper Panel base ESPHome config
+# Hardware summary:
+# - MCU: XIAO ESP32-C3
+# - Display: 7.5" Monochrome ePaper
+# - Resolution: 800x480
+# - Battery: 2000mAh
+# - Power: USB Type-C 5V
+# - Operating temperature: -25°C to 50°C
+# - Enclosure: 3D printed PLA
+
+esphome:
+  name: xiao-75-epaper
+  friendly_name: XIAO 7.5 EPaper
+
+esp32:
+  board: esp32-c3-devkitm-1
+  framework:
+    type: esp-idf
+
+# Enable logging
+logger:
+
+# Enable Home Assistant API
+api:
+  encryption:
+    key: "hQbCFGe17uH2bC8g9QrklLhip5qhADH/+yJ7+lTgeUM="
+
+ota:
+  - platform: esphome
+    password: "09fd079beadb6deadc8338100e90ebdd"
+
+wifi:
+  ssid: !secret wifi_ssid
+  password: !secret wifi_password
+
+  # Enable fallback hotspot (captive portal) in case wifi connection fails
+  ap:
+    ssid: "Epaper-Setup"
+    password: "connectme!1"
+
+captive_portal:
+
+time:
+  - platform: homeassistant
+    id: ha_time
+
+spi:
+  clk_pin: GPIO8
+  mosi_pin: GPIO10
+
+display:
+  - platform: waveshare_epaper
+    id: xiao_epaper_display
+    model: 7.50inv2
+    cs_pin: GPIO3
+    dc_pin: GPIO5
+    busy_pin:
+      number: GPIO4
+      inverted: true
+    reset_pin: GPIO2
+    rotation: 0
+    update_interval: 300s
+    lambda: |-
+      it.printf(20, 20, id(font_medium), "XIAO 7.5 EPaper Ready");
+      auto now = id(ha_time).now();
+      if (now.is_valid()) {
+        it.strftime(20, 60, id(font_small), "%a %d %b %Y %H:%M", now);
+      }
+
+font:
+  - file: "gfonts://Inter@400"
+    id: font_small
+    size: 24
+
+  - file: "gfonts://Inter@600"
+    id: font_medium
+    size: 30
